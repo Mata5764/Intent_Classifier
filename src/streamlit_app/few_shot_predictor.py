@@ -3,6 +3,7 @@
 import time
 import sys
 import os
+import streamlit as st
 
 # Add parent directories to path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -28,8 +29,13 @@ class FewShotPredictor:
             train_texts, val_texts, train_labels, val_labels = load_data()
             self.examples = select_examples(train_texts, train_labels, examples_per_class=4)
             
+            # Get OpenAI API key from Streamlit secrets
+            api_key = st.secrets.get("OPENAI_API_KEY")
+            if not api_key:
+                raise ValueError("OpenAI API key not found in Streamlit secrets")
+            
             # Initialize LangChain structured LLM
-            llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.0)
+            llm = ChatOpenAI(model="gpt-4-turbo", temperature=0.0, api_key=api_key)
             self.structured_llm = llm.with_structured_output(IntentClassification)
             
             print("✅ Few-Shot model loaded successfully")
@@ -55,7 +61,7 @@ class FewShotPredictor:
                 "intent": intent,
                 "confidence": "N/A",  # LLMs don't provide confidence scores
                 "prediction_time": round(prediction_time * 1000, 2),  # ms
-                "model_info": "GPT-3.5-turbo (Few-Shot)",
+                "model_info": "GPT-4-turbo (Few-Shot)",
                 "training_examples": FEW_SHOT_EXAMPLES
             }
             
