@@ -30,9 +30,14 @@ class FewShotPredictor:
             self.examples = select_examples(train_texts, train_labels, examples_per_class=4)
             
             # Get OpenAI API key from Streamlit secrets
-            api_key = st.secrets.get("OPENAI_API_KEY")
-            if not api_key:
-                raise ValueError("OpenAI API key not found in Streamlit secrets")
+            try:
+                api_key = st.secrets["OPENAI_API_KEY"]
+            except KeyError:
+                try:
+                    # Try alternative format
+                    api_key = st.secrets["secrets"]["OPENAI_API_KEY"]
+                except KeyError:
+                    raise ValueError("OpenAI API key not found in Streamlit secrets")
             
             # Initialize LangChain structured LLM
             llm = ChatOpenAI(model="gpt-4-turbo", temperature=0.0, api_key=api_key)
