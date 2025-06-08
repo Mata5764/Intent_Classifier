@@ -1,0 +1,57 @@
+# Virtual Environment
+venv/
+env/
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Model files (large files) - COMMENTED OUT AS NEEDED FOR DEPLOYMENT
+# *.pt
+# *.pth
+# *.bin
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Assignment/Test files
+*.pdf
+Tifin-test_*.pdf
+
+# Evaluation folder (experimental code)
+src/evaluation/ 
